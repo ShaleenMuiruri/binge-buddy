@@ -2,11 +2,23 @@ import { MovieGrid } from "@/components/MovieGrid";
 
 export default function Home() {
   return (
-    <main style={{ padding: 24 }}>
-      <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 12 }}>BingeBuddy</h1>
-      <p style={{ marginBottom: 16 }}>Discover and track movies you will love.</p>
-      <h2 style={{ fontSize: 20, fontWeight: 600, marginBottom: 16 }}>Popular Movies</h2>
-      <MovieGrid />
-    </main>
+    <div className="space-y-8">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Welcome to BingeBuddy
+        </h1>
+        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Discover and track movies you will love. Find your next favorite film with our curated
+          recommendations.
+        </p>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+          Popular Movies
+        </h2>
+        <MovieGrid />
+      </div>
+    </div>
   );
 }

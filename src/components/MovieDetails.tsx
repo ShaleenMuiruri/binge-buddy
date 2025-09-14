@@ -75,12 +75,9 @@ export function MovieDetails({ movieId }: MovieDetailsProps) {
           <Image
             src={getPosterUrl(movie.poster_path, "w500")}
             alt={movie.title}
-            style={{
-              width: 300,
-              height: 450,
-              objectFit: "cover",
-              borderRadius: 8,
-            }}
+            width={500}
+            height={750}
+            className="w-[300px] h-[450px] object-cover rounded-lg"
           />
         </div>
 

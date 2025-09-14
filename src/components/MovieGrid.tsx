@@ -40,11 +40,9 @@ export function MovieGrid({ page = 1 }: MovieGridProps) {
           <Image
             src={getPosterUrl(movie.poster_path, "w342")}
             alt={movie.title}
-            style={{
-              width: "100%",
-              height: 300,
-              objectFit: "cover",
-            }}
+            width={342}
+            height={513}
+            className="w-full h-[300px] object-cover"
           />
           <div style={{ padding: 12 }}>
             <h3
