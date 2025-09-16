@@ -8,8 +8,9 @@ import { TMDBResponse, Movie } from "@/types/tmdb";
 export async function generateStaticParams() {
   // Check if TMDB token is available
   if (!process.env.TMDB_BEARER_TOKEN) {
-    console.warn("TMDB_BEARER_TOKEN not found, skipping static generation");
-    return [];
+    console.warn("TMDB_BEARER_TOKEN not found, using fallback static params");
+    // Return a fallback parameter to satisfy static export requirements
+    return [{ id: "550" }]; // Fight Club as a fallback
   }
 
   try {
@@ -27,8 +28,8 @@ export async function generateStaticParams() {
     }));
   } catch {
     console.error("Failed to fetch popular movies for static generation");
-    // Return empty array if API call fails to prevent build failure
-    return [];
+    // Return fallback parameter if API call fails to prevent build failure
+    return [{ id: "550" }]; // Fight Club as a fallback
   }
 }
 
