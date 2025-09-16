@@ -6,6 +6,12 @@ import { TMDBResponse, Movie } from "@/types/tmdb";
 
 // Generate static params for popular movies to enable static export
 export async function generateStaticParams() {
+  // Check if TMDB token is available
+  if (!process.env.TMDB_BEARER_TOKEN) {
+    console.warn("TMDB_BEARER_TOKEN not found, skipping static generation");
+    return [];
+  }
+
   try {
     // Fetch popular movies to generate static pages for the most popular ones
     const response = await tmdbClient.get<TMDBResponse<Movie>>("/movie/popular", {
@@ -19,7 +25,8 @@ export async function generateStaticParams() {
     return movies.slice(0, 20).map((movie) => ({
       id: movie.id.toString(),
     }));
-  } catch (error) {
+  } catch {
+    console.error("Failed to fetch popular movies for static generation");
     // Return empty array if API call fails to prevent build failure
     return [];
   }
