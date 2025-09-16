@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { MovieDetails } from "@/components/MovieDetails";
+import { MovieDetail } from "@/components/MovieDetail";
 import { PageProps } from "@/types";
 import tmdbClient from "@/lib/api/tmdb";
 import { TMDBResponse, Movie } from "@/types/tmdb";
@@ -41,5 +41,5 @@ export default async function MovieDetailPage(props: PageProps) {
     return notFound();
   }
 
-  return <MovieDetails movieId={movieId} />;
+  return <MovieDetail movieId={movieId} />;
 }
