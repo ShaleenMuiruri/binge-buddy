@@ -1,5 +1,8 @@
 // Main types export file
 export * from "./tmdb";
+export * from "./components";
+export * from "./hooks";
+export * from "./api";
 
 // App-level types
 export interface PageProps {
@@ -8,13 +11,4 @@ export interface PageProps {
 
 export interface ProvidersProps {
   children: React.ReactNode;
-}
-
-// Component prop types
-export interface MovieDetailsProps {
-  movieId: number;
-}
-
-export interface MovieGridProps {
-  page?: number;
 }
