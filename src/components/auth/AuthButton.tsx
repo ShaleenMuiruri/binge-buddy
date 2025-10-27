@@ -49,6 +49,8 @@ export function AuthButton() {
               <Image
                 src={session.user.image}
                 alt={session.user.name || "User"}
+                width={32}
+                height={32}
                 className="h-8 w-8 rounded-full object-cover border border-gray-200 dark:border-gray-700"
               />
             ) : (

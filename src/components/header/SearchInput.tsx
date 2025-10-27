@@ -38,16 +38,16 @@ export const SearchInput = memo(({ onSearch }: SearchInputProps) => {
   // Show input if manually opened OR on search page with query
   const showInput = isOpen || (isOnSearchPage && urlQuery);
 
-  // Sync with URL when on search page
+  // Sync with URL only when entering the search page or pathname changes
   useEffect(() => {
-    if (isOnSearchPage && urlQuery) {
+    if (isOnSearchPage && urlQuery && !isOpen) {
       setIsOpen(true);
       setQuery(urlQuery);
-    } else if (!isOnSearchPage) {
+    } else if (!isOnSearchPage && isOpen) {
       setIsOpen(false);
       setQuery("");
     }
-  }, [isOnSearchPage, urlQuery]);
+  }, [isOnSearchPage]); // Only run when pathname changes, not when query changes
 
   // Debounced search
   const triggerSearch = (searchQuery: string) => {
