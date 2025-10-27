@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useState, Suspense } from "react";
 import { SearchInput } from "./header/SearchInput";
 import { Navigation } from "./header/Navigation";
 import { MobileMenu } from "./header/MobileMenu";
@@ -65,7 +65,9 @@ export const Header = () => {
 
           {/* Right side actions */}
           <div className="flex items-center gap-2">
-            <SearchInput onSearch={handleSearch} />
+            <Suspense fallback={<div className="w-8 h-8" />}>
+              <SearchInput onSearch={handleSearch} />
+            </Suspense>
             <AuthButton />
             <MobileMenu onClick={toggleMobileMenu} isOpen={isMobileMenuOpen} />
           </div>
