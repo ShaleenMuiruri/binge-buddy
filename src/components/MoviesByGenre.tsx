@@ -23,7 +23,7 @@ export const MoviesByGenre = () => {
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Movies</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Movies</h1>
 
         {/* Genre Filter */}
         <div className="w-48">
@@ -48,7 +48,9 @@ export const MoviesByGenre = () => {
       {/* Movies Display */}
       {selectedGenre && (
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">{selectedGenre.name} Movies</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mt-4 mb-6">
+            {selectedGenre.name} Movies
+          </h2>
           {error ? (
             <div className="text-red-500">Error loading movies: {error.message}</div>
           ) : isLoading ? (

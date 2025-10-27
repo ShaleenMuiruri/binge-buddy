@@ -14,8 +14,8 @@ const NavLink = memo(
     onClick,
   }: NavigationItem & { variant?: "desktop" | "mobile"; onClick?: () => void }) => {
     const baseClasses = "transition-colors duration-200";
-    const activeClasses = "text-gray-900 bg-gray-100 font-bold";
-    const inactiveClasses = "text-gray-700 hover:text-gray-900 hover:bg-gray-10";
+    const activeClasses = "text-gray-900 bg-gray-200 font-bold";
+    const inactiveClasses = "text-gray-700 hover:text-gray-900 hover:bg-gray-100";
 
     if (variant === "mobile") {
       return (

@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useMemo, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useMemo, useState, Suspense } from "react";
 import { SearchInput } from "./header/SearchInput";
 import { Navigation } from "./header/Navigation";
 import { MobileMenu } from "./header/MobileMenu";
+import { AuthButton } from "./auth/AuthButton";
 
 // Navigation items configuration
 const NAV_ITEMS = [
@@ -19,6 +20,7 @@ const NAV_ITEMS = [
 
 export const Header = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Memoize navigation items to prevent unnecessary re-renders
@@ -36,8 +38,9 @@ export const Header = () => {
   };
 
   const handleSearch = (query: string) => {
-    // Handle search functionality here
-    console.log("Searching for:", query);
+    if (query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+    }
   };
 
   return (
@@ -61,24 +64,11 @@ export const Header = () => {
           </div>
 
           {/* Right side actions */}
-          <div className="flex items-center space-x-4">
-            <SearchInput onSearch={handleSearch} />
-            <button
-              type="button"
-              className="focus:outline-none rounded-full cursor-pointer"
-              aria-label="User profile"
-            >
-              <div className="h-8 w-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors duration-200">
-                <svg
-                  className="h-5 w-5 text-gray-600"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                </svg>
-              </div>
-            </button>
+          <div className="flex items-center gap-2">
+            <Suspense fallback={<div className="w-8 h-8" />}>
+              <SearchInput onSearch={handleSearch} />
+            </Suspense>
+            <AuthButton />
             <MobileMenu onClick={toggleMobileMenu} isOpen={isMobileMenuOpen} />
           </div>
         </div>
