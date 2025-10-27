@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 BingeBuddy
 
-## Getting Started
+A modern, responsive movie discovery platform built with Next.js and The Movie Database (TMDB) API. Discover trending movies, search by title, explore by genre, and curate your personal watchlist.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=flat-square&logo=next.js)
+![React](https://img.shields.io/badge/React-19.1-blue?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38bdf8?style=flat-square&logo=tailwind-css)
+
+## ✨ Features
+
+- **🎬 Movie Discovery**: Browse popular, trending, top-rated, and upcoming movies
+- **🔍 Smart Search**: Debounced search with pagination support
+- **🎭 Genre Exploration**: Filter movies by genre with dynamic carousels
+- **👤 Authentication**: Google OAuth integration with NextAuth
+- **📱 Responsive Design**: Mobile-first approach with smooth animations
+- **⚡ Performance**: Optimized with React Query caching and Next.js 15
+- **♿ Accessibility**: ARIA labels and keyboard navigation support
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and npm/pnpm/yarn/bun
+- TMDB API key ([Get one here](https://www.themoviedb.org/settings/api))
+- Google OAuth credentials (optional, for authentication)
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/yourusername/binge-buddy.git
+   cd binge-buddy
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   # or
+   pnpm install
+   # or
+   yarn install
+   ```
+
+3. **Set up environment variables**
+
+   Copy the example environment file and fill in your API keys:
+
+   ```bash
+   cp env.example .env.local
+   ```
+
+   Update `.env.local` with your credentials:
+
+   ```env
+   # TMDB API Configuration (required)
+   TMDB_BEARER_TOKEN=your_tmdb_bearer_token
+   TMDB_BASE_URL=https://api.themoviedb.org/3
+
+   # Google OAuth Configuration (optional)
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+   # NextAuth Configuration
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your_random_secret_here
+   ```
+
+4. **Run the development server**
 
 ```bash
 npm run dev
 # or
-yarn dev
-# or
 pnpm dev
 # or
-bun dev
+   yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Core
 
-## Learn More
+- **Next.js 15** - React framework with App Router
+- **React 19** - UI library
+- **TypeScript** - Type safety
 
-To learn more about Next.js, take a look at the following resources:
+### Styling & UI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **shadcn/ui** - Component library
+- **lucide-react** - Icon library
+- **Embla Carousel** - Carousel component
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### State Management & Data Fetching
 
-## Deploy on Vercel
+- **React Query (TanStack Query)** - Server state management
+- **NextAuth.js** - Authentication
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Development Tools
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **Husky** - Git hooks
+- **Jest** - Testing framework
+- **TypeScript** - Type checking
+
+```
+
+```
