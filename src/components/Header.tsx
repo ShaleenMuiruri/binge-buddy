@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { SearchInput } from "./header/SearchInput";
 import { Navigation } from "./header/Navigation";
@@ -20,6 +20,7 @@ const NAV_ITEMS = [
 
 export const Header = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Memoize navigation items to prevent unnecessary re-renders
@@ -37,8 +38,9 @@ export const Header = () => {
   };
 
   const handleSearch = (query: string) => {
-    // Handle search functionality here
-    console.log("Searching for:", query);
+    if (query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+    }
   };
 
   return (

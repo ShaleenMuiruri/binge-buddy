@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export function AuthButton() {
   const { data: session, status } = useSession();
@@ -45,7 +46,7 @@ export function AuthButton() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0">
             {session.user?.image ? (
-              <img
+              <Image
                 src={session.user.image}
                 alt={session.user.name || "User"}
                 className="h-8 w-8 rounded-full object-cover border border-gray-200 dark:border-gray-700"

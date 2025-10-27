@@ -1,6 +1,7 @@
 "use client";
 
 import { memo, useState, useRef, useEffect } from "react";
+import { useSearchParams, usePathname } from "next/navigation";
 import { SearchInputProps } from "@/types/components/header";
 
 // Search icon component
@@ -24,55 +25,98 @@ const SearchIcon = memo(() => (
 SearchIcon.displayName = "SearchIcon";
 
 export const SearchInput = memo(({ onSearch }: SearchInputProps) => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const urlQuery = searchParams.get("q") || "";
+  const isOnSearchPage = pathname === "/search";
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
-    if (!isSearchOpen) {
-      setSearchQuery("");
+  // Show input if manually opened OR on search page with query
+  const showInput = isOpen || (isOnSearchPage && urlQuery);
+
+  // Sync with URL when on search page
+  useEffect(() => {
+    if (isOnSearchPage && urlQuery) {
+      setIsOpen(true);
+      setQuery(urlQuery);
+    } else if (!isOnSearchPage) {
+      setIsOpen(false);
+      setQuery("");
     }
+  }, [isOnSearchPage, urlQuery]);
+
+  // Debounced search
+  const triggerSearch = (searchQuery: string) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
+      if (searchQuery.trim().length >= 2) {
+        onSearch?.(searchQuery.trim());
+      }
+    }, 300);
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
+  // Handle input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setQuery(value);
+    triggerSearch(value);
+  };
+
+  // Handle form submit (immediate search)
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      onSearch?.(searchQuery);
-      setIsSearchOpen(false);
-      setSearchQuery("");
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (query.trim()) {
+      onSearch?.(query.trim());
     }
   };
 
-  // Click outside to close search
+  // Toggle search input
+  const toggleSearch = () => {
+    if (isOnSearchPage && urlQuery) return; // Don't close on search page
+    setIsOpen(!isOpen);
+    if (!isOpen) setQuery("");
+  };
+
+  // Click outside to close
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setIsSearchOpen(false);
-        setSearchQuery("");
+        if (isOnSearchPage && urlQuery) return; // Don't close on search page
+        setIsOpen(false);
+        setQuery("");
       }
     };
 
-    if (isSearchOpen) {
+    if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
     }
+  }, [isOpen, isOnSearchPage, urlQuery]);
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [isSearchOpen]);
+  }, []);
 
   return (
     <div ref={searchRef}>
-      {isSearchOpen ? (
-        <form onSubmit={handleSearchSubmit}>
+      {showInput ? (
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            value={query}
+            onChange={handleChange}
             placeholder="Search movies..."
             className="px-4 h-9 border rounded-lg text-sm bg-gray-100 focus:outline-none focus:border-transparent md:w-64"
-            autoFocus
+            autoFocus={!isOnSearchPage}
           />
         </form>
       ) : (
